@@ -1,1 +1,108 @@
-/* react-radial-dock styles — see Phase 7 */
+:root {
+  --rrd-bg: rgba(20, 20, 20, 0.55);
+  --rrd-bg-blur: 20px;
+  --rrd-slice-fill: transparent;
+  --rrd-slice-fill-hover: #1e73ff;
+  --rrd-slice-fill-active: rgba(0, 0, 0, 0.7);
+  --rrd-slice-fill-disabled: rgba(255, 255, 255, 0.05);
+  --rrd-icon-color: #fff;
+  --rrd-icon-color-hover: #fff;
+  --rrd-label-color: rgba(255, 255, 255, 0.85);
+  --rrd-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  --rrd-ring-stroke: transparent;
+  --rrd-ring-stroke-width: 0;
+  --rrd-icon-size: 32px;
+  --rrd-inner-radius: 55px;
+  --rrd-outer-radius: 110px;
+  --rrd-z-index: 9999;
+}
+
+.rrd-overlay {
+  position: fixed;
+  inset: 0;
+  background: transparent;
+  z-index: var(--rrd-z-index);
+}
+.rrd-container {
+  position: absolute;
+  pointer-events: none;
+  filter: drop-shadow(var(--rrd-shadow));
+  width: calc(var(--rrd-outer-radius) * 2);
+  height: calc(var(--rrd-outer-radius) * 2);
+}
+.rrd-disk {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--rrd-bg);
+  backdrop-filter: blur(var(--rrd-bg-blur));
+  -webkit-backdrop-filter: blur(var(--rrd-bg-blur));
+  -webkit-mask: radial-gradient(circle, transparent var(--rrd-inner-radius), #000 var(--rrd-inner-radius));
+  mask: radial-gradient(circle, transparent var(--rrd-inner-radius), #000 var(--rrd-inner-radius));
+  pointer-events: none;
+}
+.rrd-svg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+.rrd-slice {
+  fill: var(--rrd-slice-fill);
+  stroke: var(--rrd-ring-stroke);
+  stroke-width: var(--rrd-ring-stroke-width);
+  pointer-events: all;
+  cursor: pointer;
+  transition: fill 120ms ease;
+}
+.rrd-slice--hovered {
+  fill: var(--rrd-slice-fill-hover);
+}
+.rrd-slice--disabled {
+  fill: var(--rrd-slice-fill-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.rrd-slice:active {
+  fill: var(--rrd-slice-fill-active);
+}
+
+.rrd-icon {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  pointer-events: none;
+  color: var(--rrd-icon-color);
+  width: var(--rrd-icon-size);
+  height: var(--rrd-icon-size);
+  transform: translate(-50%, -50%);
+}
+.rrd-icon--hovered {
+  color: var(--rrd-icon-color-hover);
+}
+.rrd-label {
+  color: var(--rrd-label-color);
+  font: 11px/1.2 inherit;
+  text-align: center;
+}
+
+.rrd-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .rrd-disk {
+    background: rgba(20, 20, 20, 0.85);
+  }
+}
