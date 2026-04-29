@@ -9,8 +9,8 @@ export default defineConfig([
     sourcemap: false,
     minify: false,
     treeshake: true,
+    splitting: false,
     external: ['react', 'react-dom', 'gsap'],
-    banner: { js: "'use client';" },
     outExtension: ({ format }) => ({ js: format === 'esm' ? '.mjs' : '.cjs' }),
   },
   {
