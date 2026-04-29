@@ -37,3 +37,60 @@ describe('polarToCartesian', () => {
     expect(y).toBeCloseTo(40, 10);
   });
 });
+
+// append to tests/geometry.test.ts
+import { arcPath } from '../src/geometry';
+
+describe('arcPath', () => {
+  it('produces a closed path with M/L/A/A/Z commands', () => {
+    const d = arcPath({
+      cx: 100,
+      cy: 100,
+      innerRadius: 30,
+      outerRadius: 80,
+      startAngle: 0,
+      endAngle: Math.PI / 2,
+    });
+    expect(d).toMatch(/^M /);
+    expect(d).toMatch(/Z\s*$/);
+    // outer arc + inner arc = two A commands
+    expect(d.match(/A /g)?.length).toBe(2);
+  });
+
+  it('uses largeArcFlag=1 for spans > PI', () => {
+    const d = arcPath({
+      cx: 0,
+      cy: 0,
+      innerRadius: 10,
+      outerRadius: 20,
+      startAngle: 0,
+      endAngle: (3 * Math.PI) / 2,
+    });
+    // Outer arc command should contain "1 1" (large-arc=1, sweep=1) somewhere.
+    expect(d).toMatch(/A \d+(\.\d+)? \d+(\.\d+)? 0 1 1/);
+  });
+
+  it('uses largeArcFlag=0 for spans <= PI', () => {
+    const d = arcPath({
+      cx: 0,
+      cy: 0,
+      innerRadius: 10,
+      outerRadius: 20,
+      startAngle: 0,
+      endAngle: Math.PI / 2,
+    });
+    expect(d).toMatch(/A \d+(\.\d+)? \d+(\.\d+)? 0 0 1/);
+  });
+
+  it('matches snapshot at known coordinates', () => {
+    const d = arcPath({
+      cx: 100,
+      cy: 100,
+      innerRadius: 50,
+      outerRadius: 100,
+      startAngle: 0,
+      endAngle: Math.PI / 2,
+    });
+    expect(d).toMatchInlineSnapshot(`"M 100 0 A 100 100 0 0 1 200 100 L 150 100 A 50 50 0 0 0 100 50 Z"`);
+  });
+});
