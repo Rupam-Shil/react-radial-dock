@@ -159,18 +159,26 @@ export const RadialDock = forwardRef<RadialDockHandle, RadialDockProps>(function
     onClose: close,
   });
 
+  // Stable refs for imperative handle so the returned methods always see latest values.
+  const triggerRef = useRef(trigger);
+  triggerRef.current = trigger;
+  const closeRef = useRef(close);
+  closeRef.current = close;
+  const isOpenRef = useRef(isOpen);
+  isOpenRef.current = isOpen;
+
   useImperativeHandle(
     ref,
     () => ({
-      open: (x, y) => trigger(x, y),
-      close,
+      open: (x, y) => triggerRef.current(x, y),
+      close: () => closeRef.current(),
       toggle: (x, y) => {
-        if (isOpen) close();
-        else trigger(x, y);
+        if (isOpenRef.current) closeRef.current();
+        else triggerRef.current(x, y);
       },
-      isOpen: () => isOpen,
+      isOpen: () => isOpenRef.current,
     }),
-    [trigger, close, isOpen],
+    [],
   );
 
   // Lazy-load gsap on first open.
