@@ -108,3 +108,47 @@ export function clampPosition(
     y: Math.min(Math.max(pos.y, min), maxY),
   };
 }
+
+export function gapToRadians(sliceGapPx: number, iconRadius: number, sliceSize?: number): number {
+  if (iconRadius <= 0) return 0;
+  const raw = sliceGapPx / iconRadius;
+  if (sliceSize == null) return raw;
+  // Don't let the gap eat more than 90% of a slice.
+  const cap = (sliceSize / 2) * 0.9;
+  return Math.min(raw, cap);
+}
+
+export interface SliceRangesInput {
+  n: number;
+  startRad: number;
+  dirSign: 1 | -1;
+  /** Pre-clamped (use gapToRadians). */
+  gapRad: number;
+}
+
+export interface SliceRange {
+  /** Slice center angle (rad). */
+  center: number;
+  /** Slice start angle (rad), with gap inset applied. */
+  start: number;
+  /** Slice end angle (rad), with gap inset applied. */
+  end: number;
+}
+
+export function computeSliceRanges({
+  n,
+  startRad,
+  dirSign,
+  gapRad,
+}: SliceRangesInput): SliceRange[] {
+  const sliceSize = (2 * Math.PI) / n;
+  const half = sliceSize / 2;
+  const ranges: SliceRange[] = [];
+  for (let i = 0; i < n; i++) {
+    const center = startRad + dirSign * i * sliceSize;
+    const start = center - half + gapRad / 2;
+    const end = center + half - gapRad / 2;
+    ranges.push({ center, start, end });
+  }
+  return ranges;
+}

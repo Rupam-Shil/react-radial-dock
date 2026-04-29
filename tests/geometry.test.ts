@@ -162,3 +162,40 @@ describe('clampPosition', () => {
     expect(out.y).toBe(25);
   });
 });
+
+import { gapToRadians, computeSliceRanges } from '../src/geometry';
+
+describe('gapToRadians', () => {
+  it('returns gap/iconRadius (small angle)', () => {
+    expect(gapToRadians(2, 80)).toBeCloseTo(2 / 80, 10);
+  });
+  it('clamps to half-slice when gap too big', () => {
+    // n=4, sliceSize=PI/2. half = PI/4 ≈ 0.785.
+    // gapRad = 100/10 = 10 (huge). Clamp to half.
+    const gap = gapToRadians(100, 10, Math.PI / 2);
+    expect(gap).toBeCloseTo(Math.PI / 4 * 0.9, 5);
+  });
+});
+
+describe('computeSliceRanges', () => {
+  it('returns n ranges that span the circle minus gaps (cw, start=0)', () => {
+    const r = computeSliceRanges({ n: 4, startRad: 0, dirSign: 1, gapRad: 0 });
+    expect(r).toHaveLength(4);
+    expect(r[0]!.start).toBeCloseTo(-Math.PI / 4, 10);
+    expect(r[0]!.end).toBeCloseTo(Math.PI / 4, 10);
+    expect(r[1]!.start).toBeCloseTo(Math.PI / 4, 10);
+    expect(r[1]!.end).toBeCloseTo((3 * Math.PI) / 4, 10);
+  });
+  it('inserts gap on each side of every slice', () => {
+    const gap = 0.05;
+    const r = computeSliceRanges({ n: 4, startRad: 0, dirSign: 1, gapRad: gap });
+    expect(r[0]!.start).toBeCloseTo(-Math.PI / 4 + gap / 2, 10);
+    expect(r[0]!.end).toBeCloseTo(Math.PI / 4 - gap / 2, 10);
+  });
+  it('reverses for counter-clockwise', () => {
+    const r = computeSliceRanges({ n: 4, startRad: 0, dirSign: -1, gapRad: 0 });
+    // Slice 0 still centered at top (start=0), slice 1 to the LEFT.
+    expect(r[1]!.start).toBeCloseTo(-(3 * Math.PI) / 4, 10);
+    expect(r[1]!.end).toBeCloseTo(-Math.PI / 4, 10);
+  });
+});
