@@ -70,3 +70,14 @@ describe('stagger preset', () => {
     expect(typeof toVars.stagger === 'number' || typeof toVars.stagger === 'object').toBe(true);
   });
 });
+
+describe('iris preset', () => {
+  it('open animates clip-path on disk', () => {
+    const tl = createMockTimeline();
+    iris.open(tl, makeMockContext());
+    const diskCall = tl.calls.find(
+      (c) => c.method === 'fromTo' && (c.args[1] as Record<string, unknown>)?.clipPath != null,
+    );
+    expect(diskCall).toBeDefined();
+  });
+});
