@@ -1,0 +1,68 @@
+{
+  "name": "react-radial-dock",
+  "version": "0.0.0",
+  "description": "Customizable, GSAP-animated radial action dock for React.",
+  "license": "MIT",
+  "author": "Rupam Shil",
+  "type": "module",
+  "sideEffects": ["**/*.css"],
+  "files": ["dist", "README.md", "LICENSE"],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./styles.css": "./dist/styles.css",
+    "./presets": {
+      "types": "./dist/presets.d.ts",
+      "import": "./dist/presets.mjs",
+      "require": "./dist/presets.cjs"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "lint": "eslint src",
+    "typecheck": "tsc --noEmit",
+    "release": "changeset publish"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18",
+    "gsap": ">=3.12"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.0",
+    "@playwright/test": "^1.47.0",
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^16.0.0",
+    "@testing-library/user-event": "^14.5.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "eslint-plugin-react": "^7.35.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "gsap": "^3.12.5",
+    "jsdom": "^25.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tsup": "^8.3.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  },
+  "keywords": ["react", "radial", "menu", "dock", "context-menu", "gsap", "animation"],
+  "repository": "github:rupamshil/react-radial-dock",
+  "engines": {
+    "node": ">=20"
+  }
+}
