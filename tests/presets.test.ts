@@ -47,3 +47,14 @@ describe('fade preset', () => {
     expect(hasOpacityZero).toBe(true);
   });
 });
+
+describe('pop preset', () => {
+  it('open uses scale fromTo for icons', () => {
+    const tl = createMockTimeline();
+    pop.open(tl, makeMockContext());
+    const fromTos = tl.calls.filter((c) => c.method === 'fromTo');
+    const iconsCall = fromTos.find((c) => Array.isArray(c.args[0]));
+    expect(iconsCall).toBeDefined();
+    expect(iconsCall?.args[1]).toMatchObject({ scale: 0 });
+  });
+});
