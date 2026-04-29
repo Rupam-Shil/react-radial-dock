@@ -94,3 +94,44 @@ describe('arcPath', () => {
     expect(d).toMatchInlineSnapshot(`"M 100 0 A 100 100 0 0 1 200 100 L 150 100 A 50 50 0 0 0 100 50 Z"`);
   });
 });
+
+import { angleToIndex } from '../src/geometry';
+
+describe('angleToIndex', () => {
+  // Center 100,100; n=4; startAngle=0 (slice 0 centered at top); clockwise.
+  // Slices (cw, top→right→bottom→left): 0, 1, 2, 3.
+  const cx = 100;
+  const cy = 100;
+
+  it('top of circle is slice 0 (n=4 cw, start=0)', () => {
+    expect(angleToIndex(cx, cy - 50, cx, cy, 4, 0, 1)).toBe(0);
+  });
+  it('right of circle is slice 1 (n=4 cw)', () => {
+    expect(angleToIndex(cx + 50, cy, cx, cy, 4, 0, 1)).toBe(1);
+  });
+  it('bottom of circle is slice 2 (n=4 cw)', () => {
+    expect(angleToIndex(cx, cy + 50, cx, cy, 4, 0, 1)).toBe(2);
+  });
+  it('left of circle is slice 3 (n=4 cw)', () => {
+    expect(angleToIndex(cx - 50, cy, cx, cy, 4, 0, 1)).toBe(3);
+  });
+  it('counter-clockwise reverses indices', () => {
+    expect(angleToIndex(cx + 50, cy, cx, cy, 4, 0, -1)).toBe(3);
+    expect(angleToIndex(cx - 50, cy, cx, cy, 4, 0, -1)).toBe(1);
+  });
+  it('startAngle=PI/2 shifts slice 0 to the right (n=4, cw)', () => {
+    expect(angleToIndex(cx + 50, cy, cx, cy, 4, Math.PI / 2, 1)).toBe(0);
+  });
+  it('handles n=3 across all three sectors', () => {
+    expect(angleToIndex(cx, cy - 50, cx, cy, 3, 0, 1)).toBe(0);
+    // Slice 1 center: 0 + 1*(2π/3) ≈ 120°
+    const a = (2 * Math.PI) / 3;
+    const p1 = { x: cx + 50 * Math.sin(a), y: cy - 50 * Math.cos(a) };
+    expect(angleToIndex(p1.x, p1.y, cx, cy, 3, 0, 1)).toBe(1);
+  });
+  it('handles n=12', () => {
+    expect(angleToIndex(cx, cy - 50, cx, cy, 12, 0, 1)).toBe(0);
+    // Slice 6 is opposite (bottom).
+    expect(angleToIndex(cx, cy + 50, cx, cy, 12, 0, 1)).toBe(6);
+  });
+});
