@@ -1,12 +1,18 @@
 {
   "name": "react-radial-dock",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Customizable, GSAP-animated radial action dock for React.",
   "license": "MIT",
   "author": "Rupam Shil",
   "type": "module",
-  "sideEffects": ["**/*.css"],
-  "files": ["dist", "README.md", "LICENSE"],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -60,7 +66,15 @@
     "typescript": "^5.6.0",
     "vitest": "^2.1.0"
   },
-  "keywords": ["react", "radial", "menu", "dock", "context-menu", "gsap", "animation"],
+  "keywords": [
+    "react",
+    "radial",
+    "menu",
+    "dock",
+    "context-menu",
+    "gsap",
+    "animation"
+  ],
   "repository": "github:rupamshil/react-radial-dock",
   "engines": {
     "node": ">=20"
