@@ -23,3 +23,27 @@ describe('spring preset', () => {
     expect(tl.calls.length).toBeGreaterThan(0);
   });
 });
+
+// append to tests/presets.test.ts
+describe('fade preset', () => {
+  it('open uses opacity-only fromTo', () => {
+    const tl = createMockTimeline();
+    fade.open(tl, makeMockContext());
+    const targets = tl.calls.map((c) => c.args[0]);
+    expect(targets).toContain(tl.calls[0]!.args[0]);
+    // every fromTo must include opacity in to-vars
+    tl.calls
+      .filter((c) => c.method === 'fromTo')
+      .forEach((c) => {
+        expect(c.args[2]).toMatchObject({ opacity: 1 });
+      });
+  });
+  it('close registers an opacity tween to 0', () => {
+    const tl = createMockTimeline();
+    fade.close(tl, makeMockContext());
+    const hasOpacityZero = tl.calls.some(
+      (c) => (c.args[1] as { opacity?: number })?.opacity === 0,
+    );
+    expect(hasOpacityZero).toBe(true);
+  });
+});
