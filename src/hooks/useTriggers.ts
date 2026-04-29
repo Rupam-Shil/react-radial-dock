@@ -52,7 +52,12 @@ export function useTriggers({
     if (rightClick !== false) {
       const onContext = (e: MouseEvent) => {
         const target = e.target as Element | null;
-        if (target && ignoreSelectors.some((sel) => target.closest(sel))) return;
+        if (
+          target &&
+          typeof (target as Element).closest === 'function' &&
+          ignoreSelectors.some((sel) => (target as Element).closest(sel))
+        )
+          return;
         e.preventDefault();
         onTriggerRef.current(e.clientX, e.clientY);
       };
