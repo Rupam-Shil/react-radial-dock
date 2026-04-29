@@ -92,3 +92,19 @@ export function angleToIndex(
   rel = (rel + sliceSize / 2) % (2 * Math.PI);
   return Math.floor(rel / sliceSize) % n;
 }
+
+export function clampPosition(
+  pos: { x: number; y: number },
+  outerRadius: number,
+  viewport: { width: number; height: number },
+  padding = 8,
+): { x: number; y: number } {
+  const min = outerRadius + padding;
+  const maxX = viewport.width - outerRadius - padding;
+  const maxY = viewport.height - outerRadius - padding;
+  if (maxX < min || maxY < min) return pos;
+  return {
+    x: Math.min(Math.max(pos.x, min), maxX),
+    y: Math.min(Math.max(pos.y, min), maxY),
+  };
+}

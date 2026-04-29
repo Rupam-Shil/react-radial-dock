@@ -135,3 +135,30 @@ describe('angleToIndex', () => {
     expect(angleToIndex(cx, cy + 50, cx, cy, 12, 0, 1)).toBe(6);
   });
 });
+
+import { clampPosition } from '../src/geometry';
+
+describe('clampPosition', () => {
+  const vp = { width: 1000, height: 800 };
+  const r = 100;
+  const pad = 8;
+  const min = r + pad; // 108
+  const maxX = vp.width - r - pad; // 892
+  const maxY = vp.height - r - pad; // 692
+
+  it('passes through points already inside', () => {
+    expect(clampPosition({ x: 500, y: 400 }, r, vp)).toEqual({ x: 500, y: 400 });
+  });
+  it('clamps top-left corner', () => {
+    expect(clampPosition({ x: 0, y: 0 }, r, vp)).toEqual({ x: min, y: min });
+  });
+  it('clamps bottom-right corner', () => {
+    expect(clampPosition({ x: 9999, y: 9999 }, r, vp)).toEqual({ x: maxX, y: maxY });
+  });
+  it('handles viewport smaller than 2*radius (degenerate)', () => {
+    const tiny = { width: 50, height: 50 };
+    const out = clampPosition({ x: 25, y: 25 }, 100, tiny);
+    expect(out.x).toBe(25);
+    expect(out.y).toBe(25);
+  });
+});
