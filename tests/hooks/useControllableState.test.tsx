@@ -5,13 +5,13 @@ import { useControllableState } from '../../src/hooks/useControllableState';
 
 describe('useControllableState', () => {
   it('uses defaultValue when uncontrolled', () => {
-    const { result } = renderHook(() => useControllableState(undefined, undefined, false));
+    const { result } = renderHook(() => useControllableState<boolean>(undefined, undefined, false));
     expect(result.current[0]).toBe(false);
   });
 
   it('updates internal state in uncontrolled mode and fires onChange', () => {
     const onChange = vi.fn();
-    const { result } = renderHook(() => useControllableState(undefined, onChange, false));
+    const { result } = renderHook(() => useControllableState<boolean>(undefined, onChange, false));
     act(() => result.current[1](true));
     expect(result.current[0]).toBe(true);
     expect(onChange).toHaveBeenCalledWith(true);
