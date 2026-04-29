@@ -86,7 +86,7 @@ export function angleToIndex(
   const sliceSize = (2 * Math.PI) / n;
   // Cursor's angle relative to slice 0 center, walking in the slice's direction.
   let rel = (theta - startRad) * dirSign;
-  // Normalize to [-PI, PI]
+  // Normalize to [0, 2π)
   rel = ((rel % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
   // Shift so slice 0 spans [-sliceSize/2, +sliceSize/2]
   rel = (rel + sliceSize / 2) % (2 * Math.PI);

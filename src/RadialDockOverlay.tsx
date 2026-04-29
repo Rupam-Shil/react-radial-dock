@@ -158,7 +158,7 @@ export function RadialDockOverlay({
         onRequestClose();
         return;
       }
-      if (e.key === 'ArrowRight' || e.key === 'Tab' && !e.shiftKey) {
+      if (e.key === 'ArrowRight' || (e.key === 'Tab' && !e.shiftKey)) {
         e.preventDefault();
         const next = nextEnabled(items, hovered, +1);
         if (next !== -1) setHovered(next);

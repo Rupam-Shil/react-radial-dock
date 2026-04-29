@@ -107,9 +107,11 @@ export const RadialDock = forwardRef<RadialDockHandle, RadialDockProps>(function
     controlledPosition ?? null,
   );
 
-  // Pull controlled position into state.
+  // Pull controlled position into state. When the consumer transitions from a
+  // controlled position back to undefined, clear so the next trigger picks
+  // a fresh position from the cursor instead of reusing the last controlled one.
   useEffect(() => {
-    if (controlledPosition) setPosition(controlledPosition);
+    setPosition(controlledPosition ?? null);
   }, [controlledPosition?.x, controlledPosition?.y]);
 
   // Items-too-few guard.

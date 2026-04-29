@@ -11,4 +11,5 @@ export type {
   RadialDockHandle,
   RadialDockReducedMotion,
   RadialDockTriggers,
+  GsapTimelineLike,
 } from './types';

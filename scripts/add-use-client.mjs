@@ -8,6 +8,8 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const distDir = resolve(dirname(fileURLToPath(import.meta.url)), '..', 'dist');
+// Only the main entry imports React; presets are pure data and don't need
+// the directive (and adding it would mark them as client-only unnecessarily).
 const targets = ['index.mjs', 'index.cjs'];
 const directive = "'use client';\n";
 
