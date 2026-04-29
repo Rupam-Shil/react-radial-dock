@@ -58,3 +58,15 @@ describe('pop preset', () => {
     expect(iconsCall?.args[1]).toMatchObject({ scale: 0 });
   });
 });
+
+describe('stagger preset', () => {
+  it('open icons fromTo includes a stagger value', () => {
+    const tl = createMockTimeline();
+    stagger.open(tl, makeMockContext());
+    const fromTos = tl.calls.filter((c) => c.method === 'fromTo');
+    const iconsCall = fromTos.find((c) => Array.isArray(c.args[0]));
+    expect(iconsCall).toBeDefined();
+    const toVars = iconsCall!.args[2] as Record<string, unknown>;
+    expect(typeof toVars.stagger === 'number' || typeof toVars.stagger === 'object').toBe(true);
+  });
+});
