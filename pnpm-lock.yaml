@@ -115,8 +115,8 @@ importers:
         specifier: ^19.0.0
         version: 19.2.5(react@19.2.5)
       react-radial-dock:
-        specifier: workspace:*
-        version: link:..
+        specifier: ^1.0.0
+        version: 1.0.1(gsap@3.15.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
     devDependencies:
       '@types/node':
         specifier: ^22.0.0
@@ -2236,6 +2236,14 @@ packages:
 
   react-is@17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
+
+  react-radial-dock@1.0.1:
+    resolution: {integrity: sha512-s1pFdwoFN2muqr570LOdG8nmMW9xV20FMcFKk61V2JYKKeNL7uhQujmQeLnVqsdEIJ3YnSwnFnRmrKpEHsH9aw==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      gsap: '>=3.12'
+      react: '>=18'
+      react-dom: '>=18'
 
   react@19.2.5:
     resolution: {integrity: sha512-llUJLzz1zTUBrskt2pwZgLq59AemifIftw4aB7JxOqf1HY2FDaGDxgwpAPVzHU1kdWabH7FauP4i1oEeer2WCA==}
@@ -4826,6 +4834,12 @@ snapshots:
   react-is@16.13.1: {}
 
   react-is@17.0.2: {}
+
+  react-radial-dock@1.0.1(gsap@3.15.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5):
+    dependencies:
+      gsap: 3.15.0
+      react: 19.2.5
+      react-dom: 19.2.5(react@19.2.5)
 
   react@19.2.5: {}
 
