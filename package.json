@@ -1,6 +1,6 @@
 {
   "name": "react-radial-dock",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Customizable, GSAP-animated radial action dock for React.",
   "license": "MIT",
   "author": "Rupam Shil",

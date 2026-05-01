@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.0
+
+### Major Changes
+
+- 00ebefb: Intial public release
+
 ## 0.1.0
 
 ### Minor Changes
