@@ -1,0 +1,6 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
+  "buildCommand": "pnpm --filter react-radial-dock build && pnpm --filter rrd-landing build:next",
+  "installCommand": "pnpm install --frozen-lockfile=false"
+}

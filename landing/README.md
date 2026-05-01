@@ -1,44 +1,49 @@
 # react-radial-dock — landing
 
-A single-file landing page. Zero build step, no dependencies, deploys anywhere static.
+Next.js 15 (App Router) site for [react-radial-dock](https://www.npmjs.com/package/react-radial-dock). Hosts the marketing page, technical drawing, variants showcase, and an interactive **Playground** that exercises the real npm package.
 
-## Preview locally
+## Local dev
+
+From the repo root:
 
 ```bash
-# from the landing/ directory
-python3 -m http.server 4567
-# or
-npx serve .
+pnpm install                # installs all workspace deps
+pnpm --filter react-radial-dock build   # build the lib once (creates dist/)
+pnpm --filter rrd-landing dev           # starts on http://localhost:3218
 ```
 
-Then open <http://localhost:4567>.
+After the lib builds, hot-reload works for the landing app. To pick up library source changes, run `pnpm --filter react-radial-dock build` again (or `dev` in another terminal for watch mode).
 
-## Deploy
+## Deploying to Vercel
 
-### Vercel
-```bash
-vercel deploy landing --prod
+1. **Project root**: `landing` (set this in Vercel → Project → Settings → General → Root Directory)
+2. The included `vercel.json` runs:
+   - `pnpm install --frozen-lockfile=false` — installs the entire workspace
+   - `pnpm --filter react-radial-dock build && pnpm --filter rrd-landing build:next` — builds the library, then the site
+3. Output dir is `landing/.next` — Vercel auto-detects.
+
+That's it. Push to your git remote and Vercel will deploy.
+
+## Layout
+
 ```
-or drag-drop the `landing/` folder at <https://vercel.com/new>.
-
-### Netlify
-```bash
-netlify deploy --dir=landing --prod
+landing/
+├── app/
+│   ├── layout.tsx        — fonts + metadata
+│   ├── globals.css       — design tokens + section styles + playground styles
+│   └── page.tsx          — page composition
+├── components/
+│   ├── HeroViz.tsx       — server-rendered SVG technical drawing
+│   ├── VariantStage.tsx  — variant card mini-docks
+│   ├── LiveDock.tsx      — global right-click dock (real RadialDock)
+│   ├── Playground.tsx    — interactive controls + always-open RadialDock
+│   ├── CopyButton.tsx    — clipboard helper
+│   ├── CursorGhost.tsx   — cursor follower
+│   ├── RcHint.tsx        — corner hint that auto-dismisses
+│   ├── Icons.tsx         — Lucide-style SVG icons
+│   └── geometry.ts       — arc / polar helpers
+├── package.json
+├── next.config.mjs
+├── vercel.json
+└── tsconfig.json
 ```
-or drag-drop the folder at <https://app.netlify.com/drop>.
-
-### GitHub Pages
-Copy the directory contents to a `gh-pages` branch (or `/docs` on main) and enable Pages in repo settings.
-
-### Cloudflare Pages
-Connect the repo in the dashboard, set the publish directory to `landing/`, leave the build command blank.
-
-## What's inside
-
-- `index.html` — the entire page. Inline CSS, inline JS, fonts from Google Fonts CDN.
-- The interactive radial dock is a vanilla-JS reimplementation of the package's geometry — same arc math, same hover/keyboard model. Right-click anywhere on the page to summon it.
-- Keyboard: `Cmd/Ctrl+E` opens the dock at viewport center. Arrow keys navigate, Enter selects, Esc closes.
-
-## Editing
-
-Update copy, colors, or feature cards directly in `index.html`. The CSS is organized top-to-bottom by section; the JS lives at the bottom of `<body>`.
