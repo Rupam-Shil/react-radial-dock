@@ -75,7 +75,14 @@
     "gsap",
     "animation"
   ],
-  "repository": "github:rupamshil/react-radial-dock",
+  "homepage": "https://react-radial-dock.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Rupam-Shil/react-radial-dock.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Rupam-Shil/react-radial-dock/issues"
+  },
   "engines": {
     "node": ">=20"
   }

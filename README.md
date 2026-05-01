@@ -1,8 +1,11 @@
 # react-radial-dock
 
+[![npm](https://img.shields.io/npm/v/react-radial-dock)](https://www.npmjs.com/package/react-radial-dock)
+[![MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
 A customizable, GSAP-animated radial action dock (donut-shaped quick-action menu) for React. Drop-in for Next.js App Router, Vite, and CRA. Bring your own icons.
 
-> **Status:** v0.1 — pre-release. API may change in minor versions until v1.0.
+**[Demo](https://react-radial-dock.vercel.app) · [npm](https://www.npmjs.com/package/react-radial-dock) · [GitHub](https://github.com/Rupam-Shil/react-radial-dock)**
 
 ## Install
 
